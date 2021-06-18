@@ -44,9 +44,26 @@ struct Home: View {
                         Text("\(self.count)")
                             .font(.system(size: 65))
                             .fontWeight(.bold)
-                        Text("Of 15")
+                        if duration.hour != 0 {
+                        Text("\(duration.hour) Hours and \(duration.minute) minutes")
+                            
                             .font(.title)
                             .padding(.top)
+                        } else if duration.minute != 0 {
+                            if duration.minute == 1 {
+                                Text("\(duration.minute) minute")
+                                    .font(.title)
+                                    .padding(.top)
+                            }else {
+                            Text("\(duration.minute) minutes")
+                                .font(.title)
+                                .padding(.top)}
+                        } else {
+                            Text("Of \(duration.second) seconds")
+                                
+                                .font(.title)
+                                .padding(.top)
+                        }
                     }
                 }
                 
@@ -110,13 +127,14 @@ struct Home: View {
             }
         })
         .onReceive(self.time, perform: { _ in
+            let durationInSeconds = (duration.hour * 60 * 60) + (duration.minute * 60) + (duration.second)
             if self.start{
-                if self.count != 15 {
+                if self.count != durationInSeconds {
                 self.count += 1
                     print("hello")
                     withAnimation(.default) {
                         
-                        self.to = CGFloat(self.count) / 15
+                        self.to = CGFloat(self.count) / CGFloat(durationInSeconds)
                     }
                 } else {
                     self.notify()
