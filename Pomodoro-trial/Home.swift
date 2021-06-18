@@ -7,16 +7,29 @@
 
 import SwiftUI
 import UserNotifications
+import UIKit
 
 struct Home: View {
+    
+    
+    
     @State var start = false
     @State var to: CGFloat = 0
     @State var count = 0
     @State var time = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var duration: Time = Time(hour: 1, minute: 0, second: 0)
+    
     var body: some View {
+        
+        
         ZStack {
+            
             Color.black.opacity(0.06).edgesIgnoringSafeArea(.all)
+            
             VStack {
+                
+                //MARK: - TIMER CIRCLES
+
                 ZStack {
                     Circle()
                         .trim(from: 0, to: 1)
@@ -36,7 +49,11 @@ struct Home: View {
                             .padding(.top)
                     }
                 }
+                
+                //MARK: - BUTTONS HSTACK
+
                 HStack(spacing: 20) {
+                    
                     Button(action: {
                         if self.count == 15 {
                             self.count = 0
@@ -58,6 +75,7 @@ struct Home: View {
                         .clipShape(Capsule())
                         .shadow(radius: 6)
                     }
+                    
                     Button(action: {
                         self.count = 0
                         withAnimation(.default) {
@@ -78,11 +96,17 @@ struct Home: View {
                     }
                 }
                 .padding(.top, 55)
+                
+                
+                DurationPickerView(time: $duration)
+                
             }
         }
         .onAppear(perform: {
+            
+            //MARK: - Notification Permissions
+
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert]) { _, _ in
-                
             }
         })
         .onReceive(self.time, perform: { _ in
@@ -95,13 +119,17 @@ struct Home: View {
                         self.to = CGFloat(self.count) / 15
                     }
                 } else {
-                    self.Notify()
+                    self.notify()
                     self.start.toggle()
                 }
             }
         })
+        
     }
-    func Notify() {
+    
+    //MARK: - Notification Content
+
+    func notify() {
         let content = UNMutableNotificationContent()
         content.title = "Message"
         content.body = "Timer is completed successfully in background!"
@@ -109,10 +137,46 @@ struct Home: View {
         let req = UNNotificationRequest(identifier: "MSG", content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(req, withCompletionHandler: nil)
     }
+    
 }
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
         Home()
+    }
+}
+
+struct DurationPickerView: UIViewRepresentable {
+    @Binding var time: Time
+    
+    func makeCoordinator() -> DurationPickerView.Coordinator {
+        Coordinator(self)
+    }
+    
+    func makeUIView(context: Context) -> UIDatePicker {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .countDownTimer
+        datePicker.addTarget(context.coordinator, action: #selector(Coordinator.onDateChanged), for: .valueChanged)
+        return datePicker
+    }
+    
+    func updateUIView(_ datePicker: UIDatePicker, context: Context) {
+        let date = Calendar.current.date(bySettingHour: time.hour, minute: time.minute, second: time.second, of: datePicker.date)!
+        datePicker.setDate(date, animated: true)
+    }
+    
+    class Coordinator: NSObject {
+        var durationPicker: DurationPickerView
+        
+        init(_ durationPicker: DurationPickerView) {
+            self.durationPicker = durationPicker
+        }
+        
+        @objc func onDateChanged(sender: UIDatePicker) {
+            print(sender.date)
+            let calendar = Calendar.current
+            let date = sender.date
+            durationPicker.time = Time(hour: calendar.component(.hour, from: date), minute: calendar.component(.minute, from: date), second: calendar.component(.second, from: date))
+        }
     }
 }
