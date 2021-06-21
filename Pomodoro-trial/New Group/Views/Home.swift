@@ -17,7 +17,8 @@ struct Home: View {
     @State var to: CGFloat = 0
     @State var count = 0
     @State var time = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    @State var duration: Time = Time(hour: 1, minute: 0, second: 0)
+    @State var duration: Time = Time(hour: 0, minute: 40, second: 0)
+    @State public var showingSheet = false
     
     var body: some View {
         
@@ -30,42 +31,32 @@ struct Home: View {
                 
                 //MARK: - TIMER CIRCLES
 
-                ZStack {
-                    Circle()
-                        .trim(from: 0, to: 1)
-                        .stroke(Color.black.opacity(0.09), style: StrokeStyle(lineWidth: 35, lineCap: .round))
-                        .frame(width: 280, height: 280)
-                    Circle()
-                        .trim(from: 0, to: self.to)
-                        .stroke(Color.red, style: StrokeStyle(lineWidth: 35, lineCap: .round))
-                        .frame(width: 280, height: 280)
-                        .rotationEffect(.init(degrees: -90))
-                    VStack{
-                        Text("\(self.count)")
-                            .font(.system(size: 65))
-                            .fontWeight(.bold)
-                        if duration.hour != 0 {
+                TimerCircles(to: $to, count: $count)
+                
+                VStack{
+                    if duration.hour != 0 {
                         Text("\(duration.hour) Hours and \(duration.minute) minutes")
                             
                             .font(.title)
                             .padding(.top)
-                        } else if duration.minute != 0 {
-                            if duration.minute == 1 {
-                                Text("\(duration.minute) minute")
-                                    .font(.title)
-                                    .padding(.top)
-                            }else {
+                    } else if duration.minute != 0 {
+                        if duration.minute == 1 {
+                            Text("\(duration.minute) minute")
+                                .font(.title)
+                                .padding(.top)
+                        } else {
                             Text("\(duration.minute) minutes")
                                 .font(.title)
                                 .padding(.top)}
-                        } else {
-                            Text("Of \(duration.second) seconds")
-                                
-                                .font(.title)
-                                .padding(.top)
-                        }
+                    } else {
+                        Text("Of \(duration.second) seconds")
+                            
+                            .font(.title)
+                            .padding(.top)
                     }
+                    
                 }
+                .padding(.top)
                 
                 //MARK: - BUTTONS HSTACK
 
@@ -87,13 +78,14 @@ struct Home: View {
                                 .foregroundColor(.white)
                         }
                         .padding(.vertical)
-                        .frame(width: (UIScreen.main.bounds.width / 2) - 55)
+                        .frame(width: (UIScreen.main.bounds.width / 2) - 40)
                         .background(Color.red)
                         .clipShape(Capsule())
                         .shadow(radius: 6)
                     }
                     
                     Button(action: {
+                        self.start = false
                         self.count = 0
                         withAnimation(.default) {
                             self.to = 0
@@ -106,7 +98,7 @@ struct Home: View {
                                 .foregroundColor(.red)
                         }
                         .padding(.vertical)
-                        .frame(width: (UIScreen.main.bounds.width / 2) - 55)
+                        .frame(width: (UIScreen.main.bounds.width / 2) - 40)
                         .background(
                             Capsule().stroke(Color.red, lineWidth: 2))
                         .shadow(radius: 6)
@@ -114,8 +106,24 @@ struct Home: View {
                 }
                 .padding(.top, 55)
                 
+                Button(action: {
+                    showingSheet.toggle()
+                }) {
+                    HStack(spacing: 15) {
+                        Image(systemName: "timeline.selection")
+                            .foregroundColor(.red)
+                        Text("Select the timer")
+                            .foregroundColor(.red)
+                    }
+                    .padding(.vertical)
+                    .frame(width: (UIScreen.main.bounds.width) - 55)
+                    .background(
+                        Capsule().stroke(Color.red, lineWidth: 2))
+                    .shadow(radius: 6)
+                }
                 
-                DurationPickerView(time: $duration)
+                
+//                DurationPickerView(time: $duration)
                 
             }
         }
@@ -142,6 +150,19 @@ struct Home: View {
                 }
             }
         })
+        .sheet(isPresented: $showingSheet, content: {
+            VStack {
+                Divider()
+                Spacer()
+//                Text("Please select how long you will work/study")
+                
+                
+                DurationPickerView(time: $duration)
+//                DurationPickerStyleView()
+                
+            }
+                
+        })
         
     }
     
@@ -164,37 +185,29 @@ struct Home_Previews: PreviewProvider {
     }
 }
 
-struct DurationPickerView: UIViewRepresentable {
-    @Binding var time: Time
+//MARK: - Timer Circles Struct
+
+struct TimerCircles: View {
     
-    func makeCoordinator() -> DurationPickerView.Coordinator {
-        Coordinator(self)
-    }
+    @Binding var to: CGFloat
+    @Binding var count: Int
     
-    func makeUIView(context: Context) -> UIDatePicker {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .countDownTimer
-        datePicker.addTarget(context.coordinator, action: #selector(Coordinator.onDateChanged), for: .valueChanged)
-        return datePicker
-    }
-    
-    func updateUIView(_ datePicker: UIDatePicker, context: Context) {
-        let date = Calendar.current.date(bySettingHour: time.hour, minute: time.minute, second: time.second, of: datePicker.date)!
-        datePicker.setDate(date, animated: true)
-    }
-    
-    class Coordinator: NSObject {
-        var durationPicker: DurationPickerView
-        
-        init(_ durationPicker: DurationPickerView) {
-            self.durationPicker = durationPicker
-        }
-        
-        @objc func onDateChanged(sender: UIDatePicker) {
-            print(sender.date)
-            let calendar = Calendar.current
-            let date = sender.date
-            durationPicker.time = Time(hour: calendar.component(.hour, from: date), minute: calendar.component(.minute, from: date), second: calendar.component(.second, from: date))
+    var body: some View {
+        ZStack {
+            Circle()
+                .trim(from: 0, to: 1)
+                .stroke(Color.black.opacity(0.09), style: StrokeStyle(lineWidth: 35, lineCap: .round))
+                .frame(width: 280, height: 280)
+            Circle()
+                .trim(from: 0, to: to)
+                .stroke(Color.red, style: StrokeStyle(lineWidth: 35, lineCap: .round))
+                .frame(width: 280, height: 280)
+                .rotationEffect(.init(degrees: -90))
+            VStack{
+                Text("\(count)")
+                    .font(.system(size: 65))
+                    .fontWeight(.bold)
+            }
         }
     }
 }
