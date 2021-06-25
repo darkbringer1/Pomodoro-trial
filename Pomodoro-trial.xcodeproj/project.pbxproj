@@ -16,8 +16,8 @@
 		D80A464A267D0C2F0078AD99 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80A4649267D0C2F0078AD99 /* Home.swift */; };
 		D80A464C267D0D120078AD99 /* MainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80A464B267D0D120078AD99 /* MainPage.swift */; };
 		D80A464E267D2FFC0078AD99 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80A464D267D2FFC0078AD99 /* Time.swift */; };
-		D80A4653267DDD450078AD99 /* DurationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80A4652267DDD450078AD99 /* DurationPickerView.swift */; };
-		D8A6006E2680D80100437F77 /* DurationPickerStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6006D2680D80100437F77 /* DurationPickerStyleView.swift */; };
+		D872DC1326863C88003CACFE /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D872DC1226863C88003CACFE /* TimerManager.swift */; };
+		D8925C3B268352A900C804FC /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8925C3A268352A900C804FC /* Helper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,8 +32,8 @@
 		D80A4649267D0C2F0078AD99 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		D80A464B267D0D120078AD99 /* MainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPage.swift; sourceTree = "<group>"; };
 		D80A464D267D2FFC0078AD99 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
-		D80A4652267DDD450078AD99 /* DurationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationPickerView.swift; sourceTree = "<group>"; };
-		D8A6006D2680D80100437F77 /* DurationPickerStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationPickerStyleView.swift; sourceTree = "<group>"; };
+		D872DC1226863C88003CACFE /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
+		D8925C3A268352A900C804FC /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				D80A4649267D0C2F0078AD99 /* Home.swift */,
-				D80A4652267DDD450078AD99 /* DurationPickerView.swift */,
-				D8A6006D2680D80100437F77 /* DurationPickerStyleView.swift */,
 			);
 			name = Views;
 			path = "New Group/Views";
@@ -103,6 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				D80A464D267D2FFC0078AD99 /* Time.swift */,
+				D8925C3A268352A900C804FC /* Helper.swift */,
+				D872DC1226863C88003CACFE /* TimerManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -178,11 +178,11 @@
 			files = (
 				D80A463D267D0B5C0078AD99 /* Persistence.swift in Sources */,
 				D80A4640267D0B5C0078AD99 /* Pomodoro_trial.xcdatamodeld in Sources */,
-				D80A4653267DDD450078AD99 /* DurationPickerView.swift in Sources */,
 				D80A464E267D2FFC0078AD99 /* Time.swift in Sources */,
 				D80A464A267D0C2F0078AD99 /* Home.swift in Sources */,
-				D8A6006E2680D80100437F77 /* DurationPickerStyleView.swift in Sources */,
 				D80A4636267D0B5A0078AD99 /* ContentView.swift in Sources */,
+				D8925C3B268352A900C804FC /* Helper.swift in Sources */,
+				D872DC1326863C88003CACFE /* TimerManager.swift in Sources */,
 				D80A4634267D0B5A0078AD99 /* Pomodoro_trialApp.swift in Sources */,
 				D80A464C267D0D120078AD99 /* MainPage.swift in Sources */,
 			);
