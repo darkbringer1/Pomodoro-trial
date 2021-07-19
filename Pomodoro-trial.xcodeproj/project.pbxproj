@@ -18,6 +18,8 @@
 		D80A464E267D2FFC0078AD99 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80A464D267D2FFC0078AD99 /* Time.swift */; };
 		D872DC1326863C88003CACFE /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D872DC1226863C88003CACFE /* TimerManager.swift */; };
 		D8925C3B268352A900C804FC /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8925C3A268352A900C804FC /* Helper.swift */; };
+		D8D2159926944BC2000758E1 /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D2159826944BC2000758E1 /* SettingsPage.swift */; };
+		D8D2159B269492B4000758E1 /* TimeSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D2159A269492B3000758E1 /* TimeSelection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		D80A464D267D2FFC0078AD99 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		D872DC1226863C88003CACFE /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		D8925C3A268352A900C804FC /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		D8D2159826944BC2000758E1 /* SettingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
+		D8D2159A269492B3000758E1 /* TimeSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSelection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,11 +72,9 @@
 			children = (
 				D80A4633267D0B5A0078AD99 /* Pomodoro_trialApp.swift */,
 				D80A4635267D0B5A0078AD99 /* ContentView.swift */,
-				D80A464B267D0D120078AD99 /* MainPage.swift */,
 				D80A4651267DDC600078AD99 /* Models */,
 				D80A4650267DDC3E0078AD99 /* Views */,
 				D80A4637267D0B5C0078AD99 /* Assets.xcassets */,
-				D80A463C267D0B5C0078AD99 /* Persistence.swift */,
 				D80A4641267D0B5C0078AD99 /* Info.plist */,
 				D80A463E267D0B5C0078AD99 /* Pomodoro_trial.xcdatamodeld */,
 				D80A4639267D0B5C0078AD99 /* Preview Content */,
@@ -92,6 +94,8 @@
 			isa = PBXGroup;
 			children = (
 				D80A4649267D0C2F0078AD99 /* Home.swift */,
+				D80A464B267D0D120078AD99 /* MainPage.swift */,
+				D8D2159826944BC2000758E1 /* SettingsPage.swift */,
 			);
 			name = Views;
 			path = "New Group/Views";
@@ -100,9 +104,11 @@
 		D80A4651267DDC600078AD99 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D80A463C267D0B5C0078AD99 /* Persistence.swift */,
 				D80A464D267D2FFC0078AD99 /* Time.swift */,
 				D8925C3A268352A900C804FC /* Helper.swift */,
 				D872DC1226863C88003CACFE /* TimerManager.swift */,
+				D8D2159A269492B3000758E1 /* TimeSelection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -181,10 +187,12 @@
 				D80A464E267D2FFC0078AD99 /* Time.swift in Sources */,
 				D80A464A267D0C2F0078AD99 /* Home.swift in Sources */,
 				D80A4636267D0B5A0078AD99 /* ContentView.swift in Sources */,
+				D8D2159B269492B4000758E1 /* TimeSelection.swift in Sources */,
 				D8925C3B268352A900C804FC /* Helper.swift in Sources */,
 				D872DC1326863C88003CACFE /* TimerManager.swift in Sources */,
 				D80A4634267D0B5A0078AD99 /* Pomodoro_trialApp.swift in Sources */,
 				D80A464C267D0D120078AD99 /* MainPage.swift in Sources */,
+				D8D2159926944BC2000758E1 /* SettingsPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

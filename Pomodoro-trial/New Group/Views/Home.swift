@@ -9,58 +9,33 @@ import SwiftUI
 
 struct Home: View {
 
-    @ObservedObject var timerManager = TimerManager()
+    @State private var selection = 0
+    @Binding var selectedTime: Int
+    let house = Image(systemName: "house")
+    let houseFill = Image(systemName: "house.fill")
+    let gears = Image(systemName: "gearshape")
+    let gearsFill = Image(systemName: "gearshape.fill")
 
-    @State var selectedPickerIndex = 0
-
-    let availableMinutes = Array(1...59)
-    
     var body: some View {
-        NavigationView {
-            VStack {
-                Text(secondsToMinutesAndSeconds(seconds: timerManager.secondsLeft))
-                    .font(.system(size: 80))
-                    .padding(.top, 80)
-                Image(systemName: timerManager.timerMode == .running ? "pause.circle.fill" : "play.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 180, height: 180, alignment: .center)
-                    .foregroundColor(.red)
-                    .onTapGesture {
-                        if self.timerManager.timerMode == .initial {
-                            timerManager.setTimerLength(minutes: self.availableMinutes[selectedPickerIndex] * 60)
-                        }
-                        self.timerManager.timerMode == .running ? self.timerManager.pause() : self.timerManager.start()
-                        
-                    }
-                if timerManager.timerMode == .paused {
-                    Image(systemName: "gobackward")
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 50, height: 50, alignment: .center)
-                        .padding(.top, 40)
-                        .onTapGesture {
-                            self.timerManager.reset()
-                        }
+        TabView(selection: $selection) {
+            MainPage()
+                .tabItem {
+                    Image(systemName: selection == 0 ? "house.fill" : "house")
                 }
-                if timerManager.timerMode == .initial {
-                    Picker(selection: $selectedPickerIndex, label: Text("")) {
-                        ForEach(0..<availableMinutes.count) {
-                            Text("\(availableMinutes[$0]) min")
-                        }
-                        
-                    }
-                    .labelsHidden()
+                .tag(0)
+            SettingsPage()
+                .tabItem {
+                    Image(systemName: selection == 1 ? "gearshape.2.fill" : "gearshape.2")
+                        .accentColor(Color.black)
                 }
-                Spacer()
-            }
-            .navigationTitle("Pomodoro")
+                .tag(1)
         }
-//        .environment(\.colorScheme, .dark)
-    }
-}
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        Home()
+        .accentColor(.black)
     }
 }
 
+struct MainPage_Previews: PreviewProvider {
+    static var previews: some View {
+        Home(selectedTime: .constant(0))
+    }
+}
